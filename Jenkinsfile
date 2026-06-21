@@ -76,22 +76,21 @@ pipeline {
     }
 }
 
-    stage('Deploy PROD') {
+    stage('Deploy DEV') {
     steps {
         sh '''
-        ssh root@172.31.33.21 "
-        
+        ssh root@172.31.33.21 << EOF
         docker pull shalinidocker12/simpleflaskimgv1:latest
 
-        docker stop prodsimpleflaskcontainerv1 || true
-        docker rm prodsimpleflaskcontainerv1 || true
+        docker stop devsimpleflaskcontainerv1 || true
+        docker rm devsimpleflaskcontainerv1 || true
 
         docker run -d \
-        --name prodsimpleflaskcontainerv1 \
-        -p 5001:5000 \
-        -e APP_ENV=Production \
-        shalinidocker12/simpleflaskimgv1:latest
-        "
+          --name devsimpleflaskcontainerv1 \
+          -p 5000:5000 \
+          -e APP_ENV=Development \
+          shalinidocker12/simpleflaskimgv1:latest
+        EOF
         '''
     }
 }
