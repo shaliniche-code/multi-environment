@@ -76,7 +76,7 @@ pipeline {
     }
 }
 
-    stage('Deploy DEV') {
+    stage('Deploy PROD') {
     steps {
         sh '''
         ssh root@172.31.33.21 << EOF
